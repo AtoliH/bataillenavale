@@ -64,19 +64,24 @@ public class BattleShipsAI implements Serializable {
         AbstractShip.Orientation[] orientations = AbstractShip.Orientation.values();
 
         for (AbstractShip s : ships) {
-            boolean retry = false;
+            System.out.println(s.getName());
+            boolean retry;
             do {
                 // use Random to pick a random x, y & orientation
+                retry = false;
+                s.setOrientation(orientations[rnd.nextInt(orientations.length)]);
                 x = rnd.nextInt(size)+1;
                 y = rnd.nextInt(size)+1;
                 try {
                     board.putShip(s, x, y);
+
                 } catch (Exception e) {
                     // Cela ne devrait pas arriver, on réessaye
                     retry = true;
                 }
 
-            } while(retry || !canPutShip(s, x, y));
+
+            } while(retry);
 
         }
     }
@@ -87,6 +92,7 @@ public class BattleShipsAI implements Serializable {
      * @return the status of the hit.
      */
     public Hit sendHit(int[] coords) {
+        
         int res[] = null;
         if (coords == null || coords.length < 2) {
             throw new IllegalArgumentException("must provide an initialized array of size 2");
@@ -94,6 +100,7 @@ public class BattleShipsAI implements Serializable {
 
         // already found strike & orientation?
         if (lastVertical != null) {
+
             if (lastVertical) {
                 res = pickVCoord();
             } else {
@@ -106,6 +113,7 @@ public class BattleShipsAI implements Serializable {
                 lastVertical = null;
             }
         } else if (lastStrike != null) {
+
             // if already found a strike, without orientation
             // try to guess orientation
             res = pickVCoord();
@@ -185,7 +193,7 @@ public class BattleShipsAI implements Serializable {
     }
 
     private boolean isUndiscovered(int x, int y) {
-        return x >= 0 && x < size && y >= 0 && y < size && board.getHit(x, y) == null;
+        return x > 0 && x <= size && y > 0 && y <= size && board.getHit(x, y) == null;
     }
 
     private int[] pickRandomCoord() {
@@ -194,8 +202,8 @@ public class BattleShipsAI implements Serializable {
         int y;
 
         do {
-            x = rnd.nextInt(size);
-            y = rnd.nextInt(size);
+            x = rnd.nextInt(size)+1;
+            y = rnd.nextInt(size)+1;
         } while (!isUndiscovered(x, y));
 
         return new int[] {x, y};

@@ -29,15 +29,18 @@ public class Board implements IBoard {
                 // Navires
                 String shipLabel = ".";
                 ShipState ss = navires[j][i-1];
-                if (ss != null)
+                if (ss != null) {
                     shipLabel = ""+ss.getShip().getLabel();
+                    if (ss.isStruck()) {
+                        shipLabel = ColorUtil.colorize(shipLabel, ColorUtil.Color.RED);
+                    }
+                }
 
                 // Frappes
                 String label = ".";
                 Boolean frappe = frappes[j][i-1];
                 if (frappe != null) {
                     label = frappe? ColorUtil.colorize("X", ColorUtil.Color.RED) : "X";
-                    shipLabel = ColorUtil.colorize(shipLabel, ColorUtil.Color.RED);
                 }
                 affichageNavires += shipLabel + " ";
                 affichageFrappes += label + " ";
@@ -78,8 +81,9 @@ public class Board implements IBoard {
     // Place le bateau dans le cas où il peut être placé
     private boolean canPutShip(AbstractShip ship, int x, int y) {
         // Si hors limite le bateau ne peut être placé
-        if (x < 1 || y < 1 || x > taille || y > taille)
+        if (x < 1 || y < 1 || x > taille || y > taille) {
             return false;
+        }
 
         AbstractShip.Orientation o = ship.getOrientation();
         int dx = 0, dy = 0;
@@ -129,9 +133,9 @@ public class Board implements IBoard {
     }
 
     public Hit sendHit(int x, int y) {
+        System.out.println(x+","+y);
         if (navires[x-1][y-1] != null) {
             // Dans le cas où le navire aurait déjà été coulé ou touché on agit comme si cela n'avait pas encore été le cas, le joueur aura de nouveau l'information correspondant à l'état du navire (touché ou coulé)
-            frappes[x-1][y-1] = new Boolean(true);
             navires[x-1][y-1].addStrike();
             ShipState ss = navires[x-1][y-1];
             if (ss.isSunk()) {
@@ -140,7 +144,6 @@ public class Board implements IBoard {
             }
             return Hit.STRIKE;
         }
-        frappes[x-1][y-1] = new Boolean(false);
         return Hit.MISS;    
     }
 }

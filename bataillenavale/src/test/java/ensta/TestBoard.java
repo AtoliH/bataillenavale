@@ -58,6 +58,7 @@ public class TestBoard {
             affichage += i + ". ".repeat(10) + " "+ i + ". ".repeat(10) + "\n";
 
         assertTrue(grille.sendHit(1,1) == Hit.STRIKE);
+        grille.setHit(true, 1, 1);
         assertTrue(affichage.equals(grille.print()));
         
         // un destroyer coulé
@@ -74,6 +75,7 @@ public class TestBoard {
             affichage += i + ". ".repeat(10) + " "+ i + ". ".repeat(10) + "\n";
 
         assertTrue(grille.sendHit(1,2) == Hit.DESTROYER);
+        grille.setHit(true, 1,2);
         assertTrue(affichage.equals(grille.print()));
 
         // un destroyer coulé et un coup dans l'eau
@@ -81,7 +83,7 @@ public class TestBoard {
         affichage += "  " + "A B C D E F G H I J" + "    " + "A B C D E F G H I J\n";
 
 
-        affichage += 1+" " + ColorUtil.colorize("D", ColorUtil.Color.RED) + " " + ColorUtil.colorize(".", ColorUtil.Color.RED) + " " + ". ".repeat(8) + " "+ 1+" " + ColorUtil.colorize("X", ColorUtil.Color.RED) + " " + "X " + ". ".repeat(8)  + "\n";
+        affichage += 1+" " + ColorUtil.colorize("D", ColorUtil.Color.RED) + " " + ". ".repeat(9) + " "+ 1+" " + ColorUtil.colorize("X", ColorUtil.Color.RED) + " " + "X " + ". ".repeat(8)  + "\n";
         affichage += 2+" " + ColorUtil.colorize("D", ColorUtil.Color.RED) + " " + ". ".repeat(9) + " "+ 2+" " + ColorUtil.colorize("X", ColorUtil.Color.RED) + " " + ". ".repeat(9)  + "\n";
         for (int i = 3; i < 10; i++)
             affichage += i+" " + ". ".repeat(10) + " "+ i+" " + ". ".repeat(10) + "\n";
@@ -90,6 +92,7 @@ public class TestBoard {
             affichage += i + ". ".repeat(10) + " "+ i + ". ".repeat(10) + "\n";
 
         assertTrue(grille.sendHit(2,1) == Hit.MISS);
+        grille.setHit(false, 2, 1);
         assertTrue(affichage.equals(grille.print()));
     }
 }
