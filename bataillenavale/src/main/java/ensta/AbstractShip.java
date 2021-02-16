@@ -3,7 +3,7 @@ package ensta;
 public class AbstractShip {
 
     public enum Orientation {
-        NORD, SUD, EST, WEST
+        NORD, SUD, EST, OUEST
     }
 
     private char label;
@@ -24,6 +24,22 @@ public class AbstractShip {
 
     public char getLabel() {
         return label;
+    }
+
+    public String getName() {
+        return nom;
+    }
+
+    public int getLength() {
+        return taille;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(Orientation orientationVoulue) {
+        this.orientation = orientationVoulue;
     }
 }
 

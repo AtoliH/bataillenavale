@@ -20,6 +20,6 @@ public class TestBoard {
             affichage += i + ". ".repeat(10) + " "+ i + ". ".repeat(10) + "\n";
 
         Board grille = new Board("Grille", 10);
-        assertTrue(affichage.equals(grille.print());
+        assertTrue(affichage.equals(grille.print()));
     }
 }

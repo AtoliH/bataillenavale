@@ -9,11 +9,12 @@ public interface IBoard {
 
     /**
     * Put the given ship at the given position
+    * Throws an exception if the ship can not be placed
     * @param ship The ship to place on the board
     * @param x
     * @param y
     */
-    void putShip(AbstractShip ship, int x, int y);
+    void putShip(AbstractShip ship, int x, int y) throws Exception;
 
     /**
      * Get if a ship is placed at the given position
