@@ -2,7 +2,7 @@ package ensta;
 
 public class Carrier extends AbstractShip {
     public Carrier(Orientation orientation) {
-        super("Porte-avion", "C", 5, orientation);
+        super("Porte-avion", 'C', 5, orientation);
     }
 
     public Carrier() {
