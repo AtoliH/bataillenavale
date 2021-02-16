@@ -16,12 +16,14 @@ public class Board {
     }
 
     public String print () {
-        String affichage = "Navires :" + " ".repeat(10) + "Frappes:\n";
+        String affichage = "Navires :" + " ".repeat(14) + "Frappes:\n";
         affichage += "  " + "A B C D E F G H I J" + "    " + "A B C D E F G H I J\n";
         
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i < 10; i++)
             affichage += i+" " + ". ".repeat(10) + " "+ i+" " + ". ".repeat(10) + "\n";
-        }
+
+        for (int i = 10; i <= frappes.length ; i++)
+            affichage += i + ". ".repeat(10) + " "+ i + ". ".repeat(10) + "\n";
 
         return affichage;
     }
