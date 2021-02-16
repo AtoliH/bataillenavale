@@ -2,15 +2,15 @@ package ensta;
 
 public class Board implements IBoard {
     private String nom;
-    private char[][] navires;
-    private boolean[][] frappes;
+    private ShipState[][] navires;
+    private Boolean[][] frappes;
     private int taille;
 
     public Board (String nomVoulu, int tailleVoulue) {
         this.nom = nomVoulu;
         this.taille = tailleVoulue;
-        navires = new char[taille][taille];
-        frappes = new boolean[taille][taille];
+        navires = new ShipState[taille][taille];
+        frappes = new Boolean[taille][taille];
     }
 
     public Board (String nomVoulu) {
@@ -21,11 +21,23 @@ public class Board implements IBoard {
         String affichage = "Navires :" + " ".repeat(14) + "Frappes:\n";
         affichage += "  " + "A B C D E F G H I J" + "    " + "A B C D E F G H I J\n";
         
-        for (int i = 1; i < 10; i++)
-            affichage += i+" " + ". ".repeat(10) + " "+ i+" " + ". ".repeat(10) + "\n";
+        for (int i = 1; i <= taille; i++) {
+            String space = " "; // L'espace entre les numéros de ligne et la grille affichée
+            String affichageFrappes = "";
+            for (int j = 0; j < taille; j++) {
+                String label = ".";
+                Boolean frappe = frappes[i-1][j];
+                if (frappe != null) {
+                    label = frappe? ColorUtil.colorize("X", ColorUtil.Color.RED) : "X";
+                }
+                affichageFrappes += label + " ";
+            }
 
-        for (int i = 10; i <= frappes.length ; i++)
-            affichage += i + ". ".repeat(10) + " "+ i + ". ".repeat(10) + "\n";
+            if (i == 10)
+                space = "";
+
+            affichage += i+ space + ". ".repeat(10) + " "+ i+ space + affichageFrappes + "\n";
+        }
 
         return affichage;
     }
@@ -36,7 +48,7 @@ public class Board implements IBoard {
 
     public void putShip(AbstractShip ship, int x, int y) throws Exception {
         if (canPutShip(ship, x, y)) {
-            navires[x-1][y-1] = ship.getLabel();
+            navires[x-1][y-1] = new ShipState(ship);
         } else {
             // Si le bateau ne peut pas être placé on lance un exception qui devra être récupérée plus haut.
             throw new Exception("Le bateau ne peut pas être placé ici.");
@@ -44,7 +56,7 @@ public class Board implements IBoard {
     }
 
     public boolean hasShip(int x, int y) {
-        return navires[x-1][y-1] != 0;
+        return navires[x-1][y-1] != null;
     }
 
     public void setHit(boolean hit, int x, int y) {

@@ -11,6 +11,8 @@ public class AbstractShip {
     private int taille;
     private Orientation orientation;
 
+    private int strikeCount;
+
     protected AbstractShip(String nomVoulu, char labelVoulu, int tailleVoulue, Orientation orientationVoulue) {
 
         if (labelVoulu == 0)
@@ -40,6 +42,14 @@ public class AbstractShip {
 
     public void setOrientation(Orientation orientationVoulue) {
         this.orientation = orientationVoulue;
+    }
+
+    public void addStrike() {
+        this.strikeCount++;
+    }
+
+    public boolean isSunk() {
+        return strikeCount == taille;
     }
 }
 
