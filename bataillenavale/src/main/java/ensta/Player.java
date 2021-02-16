@@ -79,21 +79,30 @@ public class Player {
         } while (!done);
     }
 
-    /*public Hit sendHit(int[] coords) {
-        boolean done;
+    public Hit sendHit(int[] coords) {
+        boolean done = false;
         Hit hit = null;
 
         do {
             System.out.println("où frapper?");
             InputHelper.CoordInput hitInput = InputHelper.readCoordInput();
-            // TODO call sendHit on this.opponentBoard
-
-            // TODO : Game expects sendHit to return BOTH hit result & hit coords.
-            // return hit is obvious. But how to return coords at the same time ?
+            // On redemande les coordonnées tant qu'elles ne sont pas valides
+            if (hitInput.x > 0 && hitInput.y > 0 
+                    && hitInput.x <= opponentBoard.getSize() 
+                    && hitInput.y <= opponentBoard.getSize()) {
+                // call sendHit on this.opponentBoard
+                hit = this.opponentBoard.sendHit(hitInput.x,hitInput.y);
+                
+                // On retourne les coordonnées dans le tableau coords de telle façon que coords[0] contienne la valeur de x et coords[1] la valeur de y
+                coords[0] = hitInput.x;
+                coords[1] = hitInput.y;
+ 
+                done = true;
+            }
         } while (!done);
 
         return hit;
-    }*/
+    }
 
     public AbstractShip[] getShips() {
         return ships;
